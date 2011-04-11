@@ -14,7 +14,7 @@
 	<div id="info">
 		<p>
 		<% @times['results']['bindings'].each_with_index do |t, i| %>
-			<span<%= " class='faded'" if Time.parse("#{t['depTime']['value']}", Time.now) < Time.zone.now %>><%= t['depTime']['value'][0..4] %></span><%=raw "</p><p>" if (i+1)%3 == 0 %>
+			<span<%= " class='faded'" if Time.parse("#{t['depTime']['value']}", Time.zone.now) < Time.zone.now %>><%= t['depTime']['value'][0..4] %></span><%=raw "</p><p>" if (i+1)%3 == 0 %>
 		<% end %>
 		</p>
 	</div>

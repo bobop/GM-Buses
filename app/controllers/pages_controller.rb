@@ -44,7 +44,7 @@ class PagesController < ApplicationController
      ?trip <http://vocab.org/transit/terms/serviceCalendar> ?cal .
 
     # substitute /thursday for the right day of week
-     ?cal transit:#{Time.now.strftime("%A").downcase} true .
+     ?cal transit:#{Time.zone.now.strftime("%A").downcase} true .
     # only buses leaving from this stop
      ?stoptime transit:departureTime ?depTime
 
