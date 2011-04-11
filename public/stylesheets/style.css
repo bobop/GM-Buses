@@ -1,0 +1,166 @@
+@import url(http://fonts.googleapis.com/css?family=Molengo);
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+
+body { background-color: #fff; color: #333; }
+
+body, p, ol, ul, td {
+  font-family: 'Molengo', verdana, arial, helvetica, sans-serif;
+  font-size:   14px;
+  line-height: 18px;
+  text-align:center;
+}
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+a { color: #000; }
+a:hover { color: #999; }
+
+div.field, div.actions {
+  margin-bottom: 10px;
+}
+
+h1 {
+	font-size:50px;
+	line-height: 42px;
+}
+h1 a {
+	text-decoration: none;
+}
+
+h2 {
+	font-size: 22px;
+	line-height: 22px;
+}
+
+ul.ui-autocomplete {
+	width:300px;
+	list-style:none;
+	background: #e7e7e7;
+}
+ul.ui-autocomplete li {
+	text-align: left;
+}
+
+.buttons {
+	width:780px;
+	margin:0 auto;
+	margin-top:20px;
+	height:30px;
+	vertical-align:top;
+	padding-left:20px;
+	text-align:left;
+}
+.buttons span {
+	float:right;
+}
+
+#chart_div {
+	margin:0 auto;
+	display:block;
+}
+#map_canvas {
+	margin:0 auto;
+}
+.bubble {
+	text-align: center;
+}
+#content {
+	width:400px;
+	margin:0 auto;
+	text-align:left;
+	display:block;
+}
+#content p {
+	text-align:center;
+}
+#info {
+	width:384px;
+	border:3px #CCC solid;
+	padding:5px;
+	text-align:center;
+	margin:20px 0;
+}
+#info h2 {
+	margin-top:0px;
+}
+#info img {
+	vertical-align: middle;
+}
+#info span {
+	font-family: 'Droid Sans Mono', verdana, arial, helvetica, sans-serif;
+	padding: 0 10px;
+	color: #000;
+}
+#info span.faded {
+	color: #ccc;
+}
+#info table td {
+	padding-right:15px;
+}
+#info .left_info {
+	width:350px;
+	padding:19px;
+	text-align:left;
+	background:#F5F8FC;
+}
+#info .center_info {
+	width:350px;
+	padding:19px;
+	text-align:center;
+	background:#F5F8FC;
+	margin-left:200px;
+}
+#info .center_info table { margin:0 auto; }
+#info .right_info {
+	float:right;
+	width:350px;
+	padding:19px;
+	text-align:left;
+	background:#F5F8FC;
+}
+
+#footer {
+	width:800px;
+	margin:0 auto;
+	text-align:center;
+	display:block;
+}
+
+#notice {
+  color: green;
+}
+
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom: 0px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}

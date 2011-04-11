@@ -1,0 +1,10 @@
+<div id="content">
+	
+	<div id="info">
+		<%= form_tag('/service', :method => :get) do -%>
+			<%= label :service, :number, "Route" %>
+			<%= text_field :service, :number %>
+			<%= submit_tag 'Search'%>
+		<% end -%>
+	</div>
+</div>

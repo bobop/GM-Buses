@@ -1,0 +1,16 @@
+<div id="content">
+	<h2>Bus Stops for <%= params[:service][:number] %></h2>
+	
+	<div id="info">
+		<%= form_tag('/service', :method => :get) do -%>
+			<%= label :service, :number, "Route" %>
+			<%= text_field :service, :number %>
+			<%= submit_tag 'Search'%>
+		<% end -%>
+	</div>
+	<div id="info">
+		<% @stops['results']['bindings'].each do |s| %>
+			<p><%= link_to s['label']['value'], times_path(:service_id => params[:service][:number], :stop_uri => s['.0']['value'], :stop_name => s['label']['value']) %></p>
+		<% end %>
+	</div>
+</div>
