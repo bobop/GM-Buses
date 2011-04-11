@@ -1,0 +1,17 @@
+<div id="content">
+	<h2>Services for <%= params[:route] %></h2>
+	
+	<div id="info">
+		<%= form_tag('/service', :method => :get) do -%>
+			<%= label_tag 'route', "Route" %>
+			<%= text_field_tag 'route' %>
+			<%= submit_tag 'Search'%>
+		<% end -%>
+	</div>
+	<div id="info">
+		<% @services['results']['bindings'].each do |s| %>
+			<p><%= s['slabel']['value'] %></p>
+		<% end %>
+	</div>
+	<p><%= @services.inspect %></p>
+</div>

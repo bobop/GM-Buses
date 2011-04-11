@@ -77,6 +77,7 @@ ul.ui-autocomplete li {
 #content p {
 	text-align:center;
 }
+
 #info {
 	width:384px;
 	border:3px #CCC solid;
@@ -98,8 +99,11 @@ ul.ui-autocomplete li {
 #info span.faded {
 	color: #ccc;
 }
-#info table td {
-	padding-right:15px;
+#info table {
+	width:384px;
+}
+#info table tr td {
+	text-align: center;
 }
 #info .left_info {
 	width:350px;

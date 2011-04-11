@@ -1,7 +1,48 @@
 class PagesController < ApplicationController
   def home
-    response = RestClient.get("http://linkedmanchester.org/datasets/buses/routes.json")
+    query = "
+    PREFIX transit: <http://vocab.org/transit/terms/>
+
+    SELECT DISTINCT ?routeno WHERE {
+    GRAPH <http://linkedmanchester.org/id/graph/buses/gmpte> { 
+    ?route transit:routeShortName ?routeno .
+    }}
+
+    order by ?name
+    "
+    response = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&_page=1&q=#{URI.encode(query)}")
     @routes = JSON.parse(response.body)
+    
+    (2..5).each do |i|
+      response2 = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&_page=#{i}&q=#{URI.encode(query)}")
+      @routes2 = JSON.parse(response2.body)
+      @routes2['results']['bindings'].each do |r|
+        @routes['results']['bindings'].push(r)
+      end
+    end    
+  end
+  
+  def route
+    query = "
+    PREFIX transit: <http://vocab.org/transit/terms/>
+    PREFIX rdf: <http://www.w3.org/2000/01/rdf-schema#>
+
+    SELECT DISTINCT ?slabel WHERE {
+    GRAPH <http://linkedmanchester.org/id/graph/buses/gmpte> {
+    ?trip transit:route <http://linkedmanchester.org/id/buses/route/#{params[:route]}> .
+    ?trip transit:serviceCalendar ?cal .
+    ?cal transit:monday true .
+    OPTIONAL{?cal transit:startDate ?startDate }
+    OPTIONAL{?cal transit:endDate ?endDate }
+    # substitute literal date with current date
+    FILTER (!bound(?startDate) || ?startDate <= \"#{Time.zone.now.strftime("%Y-%m-%d")}\"^^<http://www.w3.org/2001/XMLSchema#date>) .
+    FILTER (!bound(?endDate) || ?endDate >= \"#{Time.zone.now.strftime("%Y-%m-%d")}\"^^<http://www.w3.org/2001/XMLSchema#date>) .
+    ?cal rdf:label ?slabel .
+    }}
+    "
+    
+    response = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&q=#{URI.encode(query)}")
+    @services = JSON.parse(response.body)
   end
   
   def service
@@ -11,10 +52,13 @@ class PagesController < ApplicationController
     PREFIX naptan: <http://transport.data.gov.uk/def/naptan/>
     PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+    PREFIX rdf: <http://www.w3.org/2000/01/rdf-schema#>
 
     SELECT distinct(?stop) ?label ?lat ?long WHERE {
     GRAPH <http://linkedmanchester.org/id/graph/buses/gmpte> {
-    ?trip transit:route <http://linkedmanchester.org/id/buses/route/#{params[:service][:number]}> .
+    ?trip transit:route <http://linkedmanchester.org/id/buses/route/#{params[:route]}> .
+    ?trip transit:serviceCalendar ?cal .
+    ?cal rdf:label ?slabel .
     ?trip transit:stopTime ?stoptime .
     ?stoptime transit:stop ?stop .
     ?stop geo:lat ?lat .
@@ -25,6 +69,7 @@ class PagesController < ApplicationController
     
     response = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&q=#{URI.encode(query)}")
     @stops = JSON.parse(response.body)
+    #render :json => response.body
   end
   
   def times
@@ -34,13 +79,13 @@ class PagesController < ApplicationController
     SELECT
      ?stoptime ?depTime ?arrTime
 
-    WHERE {
+    WHERE { GRAPH <http://linkedmanchester.org/id/graph/buses/gmpte> {
     # substitute 1800SB... for the stop id
      ?stoptime transit:stop <#{params['stop_uri']}> .
      ?stoptime <http://vocab.org/transit/terms/trip> ?trip .
 
     # substitute ...101 for the route id
-     ?trip <http://vocab.org/transit/terms/route> <http://linkedmanchester.org/id/buses/route/#{params[:service_id]}> .
+     ?trip <http://vocab.org/transit/terms/route> <http://linkedmanchester.org/id/buses/route/#{params[:route_id]}> .
      ?trip <http://vocab.org/transit/terms/serviceCalendar> ?cal .
 
     # substitute /thursday for the right day of week
@@ -56,7 +101,7 @@ class PagesController < ApplicationController
      FILTER (!bound(?startDate) || ?startDate <= \"#{Time.zone.now.strftime("%Y-%m-%d")}\"^^<http://www.w3.org/2001/XMLSchema#date>) .
      FILTER (!bound(?endDate) || ?endDate >= \"#{Time.zone.now.strftime("%Y-%m-%d")}\"^^<http://www.w3.org/2001/XMLSchema#date>) .
 
-    }
+    }}
     "
     #@alltimes = Hash
     #(1..10).each do |i|

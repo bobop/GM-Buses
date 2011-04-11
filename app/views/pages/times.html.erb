@@ -1,13 +1,13 @@
 <div id="content">
-	<h2>Times for Route <%= params[:service_id] %>,<br />
+	<h2>Times for Route <%= params[:route_id] %>,<br />
 	<%= params[:stop_name] %>,<br />
 	on <%= Time.zone.now.strftime("%a %d %B %Y, %H:%M") %>
 	</h2>
 	
 	<div id="info">
 		<%= form_tag('/service', :method => :get) do -%>
-			<%= label :service, :number, "Route" %>
-			<%= text_field :service, :number %>
+			<%= label_tag 'route', "Route" %>
+			<%= text_field_tag 'route' %>
 			<%= submit_tag 'Search'%>
 		<% end -%>
 	</div>
