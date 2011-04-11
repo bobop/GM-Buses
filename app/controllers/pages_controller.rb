@@ -53,8 +53,8 @@ class PagesController < ApplicationController
      OPTIONAL{?cal transit:endDate ?endDate }
 
      # substitute literal date with current date
-     FILTER (!bound(?startDate) || ?startDate <= \"#{Time.now.strftime("%Y-%m-%d")}\"^^<http://www.w3.org/2001/XMLSchema#date>) .
-     FILTER (!bound(?endDate) || ?endDate >= \"#{Time.now.strftime("%Y-%m-%d")}\"^^<http://www.w3.org/2001/XMLSchema#date>) .
+     FILTER (!bound(?startDate) || ?startDate <= \"#{Time.zone.now.strftime("%Y-%m-%d")}\"^^<http://www.w3.org/2001/XMLSchema#date>) .
+     FILTER (!bound(?endDate) || ?endDate >= \"#{Time.zone.now.strftime("%Y-%m-%d")}\"^^<http://www.w3.org/2001/XMLSchema#date>) .
 
     }
     "
