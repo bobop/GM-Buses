@@ -2,7 +2,7 @@
 	<h2>Bus Stops for <%= params[:route] %></h2>
 	
 	<div id="info">
-		<%= form_tag('/service', :method => :get) do -%>
+		<%= form_tag('/route', :method => :get) do -%>
 			<%= label_tag 'route', "Route" %>
 			<%= text_field_tag 'route' %>
 			<%= submit_tag 'Search'%>

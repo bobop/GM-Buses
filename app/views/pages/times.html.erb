@@ -1,22 +1,55 @@
+<% content_for :header do %>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	
+	<script type="text/javascript">
+	  function initialize() {
+	    var latlng = new google.maps.LatLng(<%= params[:lat] %>, <%= params[:long] %>)
+		var myOptions = {
+	      zoom: 14,
+	      center: latlng,
+		  disableDefaultUI: true,
+		  zoomControl: true,
+	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	    };
+	    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+		
+		var marker = new google.maps.Marker({
+		      position: latlng,
+			  map: map,
+		      title:"<%= params[:stop_name] %>"
+		});
+	  }
+		
+	</script>
+<% end %>
+
+<% content_for :body_tag do %> onload="initialize()"<% end %>
+
 <div id="content">
 	<h2>Times for Route <%= params[:route_id] %>,<br />
+	<%= params[:service_description] %>,<br />
 	<%= params[:stop_name] %>,<br />
 	on <%= Time.zone.now.strftime("%a %d %B %Y, %H:%M") %>
 	</h2>
 	
 	<div id="info">
-		<%= form_tag('/service', :method => :get) do -%>
+		<%= form_tag('/route', :method => :get) do -%>
 			<%= label_tag 'route', "Route" %>
 			<%= text_field_tag 'route' %>
 			<%= submit_tag 'Search'%>
 		<% end -%>
 	</div>
 	<div id="info">
-		<p>
-		<% @times['results']['bindings'].each_with_index do |t, i| %>
-			<span<%= " class='faded'" if Time.zone.parse("#{t['depTime']['value']}", Time.zone.now) < Time.zone.now %>><%= t['depTime']['value'][0..4] %></span><%=raw "</p><p>" if (i+1)%3 == 0 %>
-		<% end %>
-		</p>
+		<div class="right_info">
+			<div id="map_canvas" class="stop"></div>
+		</div>
+		<div class="left_info">
+			<p>
+			<% @times['results']['bindings'].each_with_index do |t, i| %>
+				<span<%= " class='faded'" if Time.zone.parse("#{t['depTime']['value']}", Time.zone.now) < Time.zone.now %>><%= t['depTime']['value'][0..4] %></span><%=raw "</p><p>" if (i+1)%3 == 0 %>
+			<% end %>
+			</p>
+		</div>
 	</div>
 
 	<p><% @times.inspect %></p>

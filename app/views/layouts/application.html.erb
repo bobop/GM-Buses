@@ -5,8 +5,9 @@
   <%= stylesheet_link_tag :all %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
+  <%= yield :header %>
 </head>
-<body>
+<body<%= yield :body_tag %>>
 	<h1><%= link_to "GM Bus Times", root_path %></h1>
 
 <%= yield %>

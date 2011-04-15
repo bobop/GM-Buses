@@ -1,4 +1,5 @@
 Gmbuses::Application.routes.draw do
+  match '/stops' => 'pages#stops'
   match '/route' => 'pages#route'
   match '/service' => 'pages#service'
   match '/service/:route_id/times' => 'pages#times', :as => :times

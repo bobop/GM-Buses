@@ -27,22 +27,48 @@ class PagesController < ApplicationController
     PREFIX transit: <http://vocab.org/transit/terms/>
     PREFIX rdf: <http://www.w3.org/2000/01/rdf-schema#>
 
-    SELECT DISTINCT ?slabel WHERE {
+    SELECT DISTINCT ?cal ?description WHERE {
     GRAPH <http://linkedmanchester.org/id/graph/buses/gmpte> {
     ?trip transit:route <http://linkedmanchester.org/id/buses/route/#{params[:route]}> .
+    ?trip transit:routeDescription ?description .
     ?trip transit:serviceCalendar ?cal .
-    ?cal transit:monday true .
+    ?cal transit:#{Time.zone.now.strftime("%A").downcase} true .
     OPTIONAL{?cal transit:startDate ?startDate }
     OPTIONAL{?cal transit:endDate ?endDate }
     # substitute literal date with current date
     FILTER (!bound(?startDate) || ?startDate <= \"#{Time.zone.now.strftime("%Y-%m-%d")}\"^^<http://www.w3.org/2001/XMLSchema#date>) .
     FILTER (!bound(?endDate) || ?endDate >= \"#{Time.zone.now.strftime("%Y-%m-%d")}\"^^<http://www.w3.org/2001/XMLSchema#date>) .
-    ?cal rdf:label ?slabel .
     }}
     "
     
     response = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&q=#{URI.encode(query)}")
     @services = JSON.parse(response.body)
+    #render :json => response.body
+  end
+  
+  def stops
+    query = "
+    PREFIX transit: <http://vocab.org/transit/terms/>
+    PREFIX naptan: <http://transport.data.gov.uk/def/naptan/>
+    PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+    PREFIX rdf: <http://www.w3.org/2000/01/rdf-schema#>
+
+    SELECT distinct(?stop) ?label ?lat ?long ?slabel WHERE {
+    GRAPH <http://linkedmanchester.org/id/graph/buses/gmpte> {
+    ?trip transit:serviceCalendar <#{params[:cal_uri]}> .
+    ?trip transit:stopTime ?stoptime .
+    ?trip transit:serviceCalendar ?cal .
+    ?cal rdf:label ?slabel .
+    ?stoptime transit:stop ?stop .
+    ?stop geo:lat ?lat .
+    ?stop geo:long ?long .
+    ?stop skos:prefLabel ?label
+    }}
+    "
+    response = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&q=#{URI.encode(query)}")
+    @stops = JSON.parse(response.body)
+    #render :json => response.body
   end
   
   def service
@@ -75,9 +101,10 @@ class PagesController < ApplicationController
   def times
     @query = "
     PREFIX transit: <http://vocab.org/transit/terms/>
+    PREFIX rdf: <http://www.w3.org/2000/01/rdf-schema#>
 
     SELECT
-     ?stoptime ?depTime ?arrTime
+     ?stoptime ?depTime ?arrTime ?sclabel
 
     WHERE { GRAPH <http://linkedmanchester.org/id/graph/buses/gmpte> {
     # substitute 1800SB... for the stop id
@@ -85,13 +112,16 @@ class PagesController < ApplicationController
      ?stoptime <http://vocab.org/transit/terms/trip> ?trip .
 
     # substitute ...101 for the route id
-     ?trip <http://vocab.org/transit/terms/route> <http://linkedmanchester.org/id/buses/route/#{params[:route_id]}> .
+    # ?trip <http://vocab.org/transit/terms/route> <http://linkedmanchester.org/id/buses/route/#{params[:route_id]}> .
+     ?trip transit:serviceCalendar <#{params[:cal_uri]}> .
      ?trip <http://vocab.org/transit/terms/serviceCalendar> ?cal .
 
     # substitute /thursday for the right day of week
      ?cal transit:#{Time.zone.now.strftime("%A").downcase} true .
     # only buses leaving from this stop
-     ?stoptime transit:departureTime ?depTime
+     ?stoptime transit:departureTime ?depTime .
+     
+     ?cal rdf:label ?sclabel
 
      OPTIONAL{?cal transit:startDate ?startDate }
 
@@ -102,6 +132,8 @@ class PagesController < ApplicationController
      FILTER (!bound(?endDate) || ?endDate >= \"#{Time.zone.now.strftime("%Y-%m-%d")}\"^^<http://www.w3.org/2001/XMLSchema#date>) .
 
     }}
+    
+    
     "
     #@alltimes = Hash
     #(1..10).each do |i|
@@ -114,6 +146,6 @@ class PagesController < ApplicationController
     #end
     response = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&_page=1&q=#{URI.encode(@query)}")
     @times = JSON.parse(response.body)
-    
+    #render :json => response.body
   end
 end
