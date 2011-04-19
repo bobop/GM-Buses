@@ -140,6 +140,16 @@ ul.ui-autocomplete li {
 	text-align:center;
 	display:block;
 }
+#footer table {
+	margin: 0 auto;
+}
+#footer table tr td {
+	vertical-align: top;
+	padding: 10px;
+}
+#footer table tr td img {
+	padding-top: 20px;
+}
 
 #notice {
   color: green;
