@@ -33,13 +33,6 @@
 	</h2>
 	
 	<div id="info">
-		<%= form_tag('/route', :method => :get) do -%>
-			<%= label_tag 'route', "Route" %>
-			<%= text_field_tag 'route' %>
-			<%= submit_tag 'Search'%>
-		<% end -%>
-	</div>
-	<div id="info">
 		<div class="right_info">
 			<div id="map_canvas" class="stop"></div>
 		</div>
@@ -50,6 +43,14 @@
 			<% end %>
 			</p>
 		</div>
+	</div>
+	
+	<div id="info" class="form">
+		<%= form_tag('/route', :method => :get) do -%>
+			<%= label_tag 'route', "Route" %>
+			<%= text_field_tag 'route' %>
+			<%= submit_tag 'Search'%>
+		<% end -%>
 	</div>
 
 	<p><% @times.inspect %></p>

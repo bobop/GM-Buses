@@ -84,6 +84,10 @@ ul.ui-autocomplete li {
 	padding:5px;
 	text-align:center;
 	margin:20px 0;
+	min-height: 390px;
+}
+#info.form {
+	min-height: 20px;
 }
 #info h2 {
 	margin-top:0px;

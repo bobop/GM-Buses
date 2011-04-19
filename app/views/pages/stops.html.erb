@@ -42,13 +42,6 @@
 	</h2>
 	
 	<div id="info">
-		<%= form_tag('/route', :method => :get) do -%>
-			<%= label_tag 'route', "Route" %>
-			<%= text_field_tag 'route' %>
-			<%= submit_tag 'Search'%>
-		<% end -%>
-	</div>
-	<div id="info">
 		<div class="right_info">
 			<div id="map_canvas"></div>
 		</div>
@@ -57,6 +50,14 @@
 				<p><%= link_to s['label']['value'], times_path(:route_id => params[:route], :stop_uri => s['.0']['value'], :stop_name => s['label']['value'], :cal_uri => params[:cal_uri], :service_description => params[:service_description], :lat => s['lat']['value'], :long => s['long']['value']) %></p>
 			<% end %>
 		</div>
+	</div>
+	
+	<div id="info" class="form">
+		<%= form_tag('/route', :method => :get) do -%>
+			<%= label_tag 'route', "Route" %>
+			<%= text_field_tag 'route' %>
+			<%= submit_tag 'Search'%>
+		<% end -%>
 	</div>
 	<p><% @stops.inspect %></p>
 </div>
