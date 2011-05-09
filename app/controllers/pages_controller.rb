@@ -23,7 +23,7 @@ class PagesController < ApplicationController
   end
   
   def route
-    query = "
+    @query = "
     PREFIX transit: <http://vocab.org/transit/terms/>
     PREFIX rdf: <http://www.w3.org/2000/01/rdf-schema#>
 
@@ -41,20 +41,20 @@ class PagesController < ApplicationController
     }}
     "
     
-    response = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&q=#{URI.encode(query)}")
+    response = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&q=#{URI.encode(@query)}")
     @services = JSON.parse(response.body)
     #render :json => response.body
   end
   
   def stops
-    query = "
+    @query = "
     PREFIX transit: <http://vocab.org/transit/terms/>
     PREFIX naptan: <http://transport.data.gov.uk/def/naptan/>
     PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
     PREFIX rdf: <http://www.w3.org/2000/01/rdf-schema#>
 
-    SELECT distinct(?stop) ?label ?lat ?long ?slabel WHERE {
+    SELECT distinct ?stop ?label ?lat ?long ?slabel WHERE {
     GRAPH <http://linkedmanchester.org/id/graph/buses/gmpte> {
     ?trip transit:serviceCalendar <#{params[:cal_uri]}> .
     ?trip transit:stopTime ?stoptime .
@@ -66,7 +66,7 @@ class PagesController < ApplicationController
     ?stop skos:prefLabel ?label
     }}
     "
-    response = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&q=#{URI.encode(query)}")
+    response = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&q=#{URI.encode(@query)}")
     @stops = JSON.parse(response.body)
     #render :json => response.body
   end

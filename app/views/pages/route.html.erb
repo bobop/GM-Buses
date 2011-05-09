@@ -14,5 +14,5 @@
 			<%= submit_tag 'Search'%>
 		<% end -%>
 	</div>
-	<p><% @services.inspect %></p>
+	<p><% @services.inspect %><%raw @query.gsub('/n', '<br>') %></p>
 </div>
