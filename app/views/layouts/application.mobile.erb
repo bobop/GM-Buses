@@ -12,22 +12,17 @@
 </head>
 <body<%= yield :body_tag %>>
   <div  data-role="page">
-    <div data-role="header">
+    <div data-role="header" data-theme="b">
       <a href="/" data-icon="home">Home</a>
   	  <h1>Greater Manchester Bus Times</h1>
     </div>
 
     <div data-role="content">
-      <%= yield %>
+    <%= yield %>
     </div>
 
-  	<div data-role="footer">
-      <div id="footer">
-    		<p>Built by <%= link_to "Bobop", "http://bobop.co.uk" %><br />
-        Open Data from <%= link_to "TfGM", "http://www.tfgm.com" %><br />
-    		Linked Data from <%= link_to "Swirrl", "http://www.swirrl.com" %><br />
-    		Inspired by Open Data Manchester</p>
-    	</div>
+  	<div data-role="footer" data-theme="b">
+      <h4>Built by <%= link_to "Bobop", "http://bobop.co.uk", "data-role" => "button" %></h4>
     </div>
   </div>
 
