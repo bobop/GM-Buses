@@ -19,7 +19,11 @@ class PagesController < ApplicationController
       @routes2['results']['bindings'].each do |r|
         @routes['results']['bindings'].push(r)
       end
-    end    
+    end
+    respond_to do |format|
+      format.html # home.html.erb
+      format.mobile # home.mobile.erb
+    end   
   end
   
   def route
@@ -44,6 +48,10 @@ class PagesController < ApplicationController
     response = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&q=#{URI.encode(@query)}")
     @services = JSON.parse(response.body)
     #render :json => response.body
+    respond_to do |format|
+      format.html # home.html.erb
+      format.mobile # home.mobile.erb
+    end 
   end
   
   def stops
@@ -69,6 +77,10 @@ class PagesController < ApplicationController
     response = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&q=#{URI.encode(@query)}")
     @stops = JSON.parse(response.body)
     #render :json => response.body
+    respond_to do |format|
+      format.html # home.html.erb
+      format.mobile # home.mobile.erb
+    end 
   end
   
   def service
@@ -96,6 +108,10 @@ class PagesController < ApplicationController
     response = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&q=#{URI.encode(query)}")
     @stops = JSON.parse(response.body)
     #render :json => response.body
+    respond_to do |format|
+      format.html # home.html.erb
+      format.mobile # home.mobile.erb
+    end 
   end
   
   def times
@@ -147,5 +163,9 @@ class PagesController < ApplicationController
     response = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&_page=1&q=#{URI.encode(@query)}")
     @times = JSON.parse(response.body)
     #render :json => response.body
+    respond_to do |format|
+      format.html # home.html.erb
+      format.mobile # home.mobile.erb
+    end 
   end
 end

@@ -1,0 +1,13 @@
+<div id="content">
+	
+	<div data-role="fieldcontain">
+	  <%= form_tag('/route', :method => :get) do -%>
+	    <input type="search", name='route', id="route", placeholder="Search for a Route number">
+	  <% end -%>
+	</div>
+	<ul data-role="listview">
+	<% @routes['results']['bindings'].sort_by{ |k| k['routeno']['value'].to_i }.each do |r| %>
+	  <li><%= link_to r['routeno']['value'], route_path(:route => r['routeno']['value']) %></li>
+	<% end %>
+	</ul>
+</div>

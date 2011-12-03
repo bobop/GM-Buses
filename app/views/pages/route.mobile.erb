@@ -1,0 +1,15 @@
+<div id="content">
+	<h4>Services for <%= params[:route] %></h4>
+	
+	<ul data-role="listview">
+	<% @services['results']['bindings'].each do |s| %>
+	  <li><%= link_to s['description']['value'], stops_path(:cal_uri => s['cal']['value'], :route => params[:route], :service_description => s['description']['value']) %></li>
+	<% end %>
+	</ul>
+	
+	<div data-role="fieldcontain">
+	  <%= form_tag('/route', :method => :get) do -%>
+	    <input type="search", name='route', id="route", placeholder="Search for a Route number">
+	  <% end -%>
+	</div>
+</div>

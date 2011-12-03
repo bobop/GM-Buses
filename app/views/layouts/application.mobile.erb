@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Greater Manchester Bus Times</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+  <%= stylesheet_link_tag "mobile" %>
+  <%= csrf_meta_tag %>
+  <%= yield :header %>
+</head>
+<body<%= yield :body_tag %>>
+  <div  data-role="page">
+    <div data-role="header">
+      <a href="/" data-icon="home">Home</a>
+  	  <h1>Greater Manchester Bus Times</h1>
+    </div>
+
+    <div data-role="content">
+      <%= yield %>
+    </div>
+
+  	<div data-role="footer">
+      <div id="footer">
+    		<p>Built by <%= link_to "Bobop", "http://bobop.co.uk" %><br />
+        Open Data from <%= link_to "TfGM", "http://www.tfgm.com" %><br />
+    		Linked Data from <%= link_to "Swirrl", "http://www.swirrl.com" %><br />
+    		Inspired by Open Data Manchester</p>
+    	</div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-157020-31']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<div id="content">
+	<h4>Times for Route <%= params[:route_id] %>,<br />
+	<%= params[:service_description] %>,<br />
+	<%= params[:stop_name] %>,<br />
+	on <%= Time.zone.now.strftime("%a %d %B %Y, %H:%M") %>
+	</h4>
+
+	<ul data-role="listview">
+	<% @times['results']['bindings'].each_with_index do |t, i| %>
+	  <% if Time.zone.parse("#{t['depTime']['value']}", Time.zone.now) > Time.zone.now %>
+		<li><%= t['depTime']['value'][0..4] %></li>
+	  <% end %>
+	<% end %>
+	</ul>
+	
+	<div data-role="fieldcontain">
+	  <%= form_tag('/route', :method => :get) do -%>
+	    <input type="search", name='route', id="route", placeholder="Search for a Route number">
+	  <% end -%>
+	</div>
+</div>

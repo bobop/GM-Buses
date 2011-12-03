@@ -1,0 +1,18 @@
+<div id="content">
+	<h4>
+		Bus Stops for <%= params[:route] %>,<br />
+		<%= params['service_description'] %>
+	</h4>
+	
+	<ul data-role="listview">
+	<% @stops['results']['bindings'].each do |s| %>
+	  <li><%= link_to s['label']['value'], times_path(:route_id => params[:route], :stop_uri => s['stop']['value'], :stop_name => s['label']['value'], :cal_uri => params[:cal_uri], :service_description => params[:service_description], :lat => s['lat']['value'], :long => s['long']['value']) %></li>
+	<% end %>
+	</ul>
+	
+	<div data-role="fieldcontain">
+	  <%= form_tag('/route', :method => :get) do -%>
+	    <input type="search", name='route', id="route", placeholder="Search for a Route number">
+	  <% end -%>
+	</div>
+</div>
