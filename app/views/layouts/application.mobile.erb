@@ -11,10 +11,11 @@
   <%= yield :header %>
 </head>
 <body<%= yield :body_tag %>>
-  <div  data-role="page">
+  <div  data-role="page" data-add-back-btn="true">
     <div data-role="header" data-theme="b">
-      <a href="/" data-icon="home">Home</a>
-  	  <h1>Greater Manchester Bus Times</h1>
+      
+  	  <h1>GM Bus Times</h1>
+      <a href="/" data-icon="home" class="ui-btn-right">Home</a>
     </div>
 
     <div data-role="content">
