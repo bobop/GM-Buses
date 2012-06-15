@@ -1,9 +1,18 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.4'
+gem 'rails', '3.2.4'
 gem 'rest-client'
 gem 'json'
 gem 'jquery-rails'
+gem 'hpricot'
+gem 'ruby_parser'
+gem 'haml-rails'
+
+group :assets do
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
+end
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

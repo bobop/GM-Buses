@@ -2,8 +2,8 @@
 <html>
 <head>
   <title>Greater Manchester Bus Times</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
+  <%= stylesheet_link_tag "application" %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tag %>
   <%= yield :header %>
 </head>
@@ -19,7 +19,7 @@
 				<td>Built by<br /><%= link_to image_tag("bobop_logo_sm.jpg"), "http://bobop.co.uk" %></td>
         <td>Open Data from<br /><%= link_to image_tag("TfGM_logo_sm.jpg"), "http://www.tfgm.com" %></td>
 				<td>Linked Data from<br /><%= link_to image_tag("swirrl.png"), "http://www.swirrl.com" %></td>
-				<td>Inspired by<br /><img src="/images/odm_logo_sm.jpg" border="0"></td>
+				<td>Inspired by<br /><%= image_tag "odm_logo_sm.jpg" %></td>
 			</tr></table>
 		</p>
 	</div>
