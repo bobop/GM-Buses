@@ -9,19 +9,19 @@
     - @stops['results']['bindings'].each do |s|
       var tLatlng = new google.maps.LatLng(#{s['lat']['value']},#{s['long']['value']});
       var marker = new google.maps.Marker({position: tLatlng,map: map,title:"#{s['label']['value']}"});
-      google.maps.event.addListener(marker, 'click', function() {window.open("#{times_path(:route_id => params[:route], :stop_uri => s['stop']['value'], :stop_name => s['label']['value'], :cal_uri => params[:cal_uri], :service_description => params[:service_description], :lat => s['lat']['value'], :long => s['long']['value'])}","_self"); });
+      google.maps.event.addListener(marker, 'click', function() {window.open("#{times_path(:route_id => params[:route], :stop_uri => s['stop']['value'], :stop_name => URI.escape(s['label']['value'], "/"), :cal_uri => params[:cal_uri], :service_description => params[:service_description], :lat => s['lat']['value'], :long => s['long']['value'])}","_self"); });
       latlngbounds.extend( tLatlng );
     map.fitBounds( latlngbounds );
     }
 .row
-  .span6
+  .span5
     %h2 Bus Stops for #{params[:route]}
-    .well
-      = params[:service_description]
+    %i{:class => "icon-arrow-right"}
+    = params[:service_description]
+    %hr
     - @stops['results']['bindings'].each do |s|
       %p= link_to s['label']['value'], times_path(:route_id => params[:route], :stop_uri => s['stop']['value'], :stop_name => URI.escape(s['label']['value'], "/"), :cal_uri => params[:cal_uri], :service_description => params[:service_description], :lat => s['lat']['value'], :long => s['long']['value']), :class => "btn"
-  .span3
-    #map_canvas
+  #map_canvas.span4
 %p
   - @stops.inspect
   - raw @query.gsub('/n', '<br>')

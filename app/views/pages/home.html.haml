@@ -1,3 +1,4 @@
+%h3 Select your Route:
 - @routes['results']['bindings'].sort_by{ |k| k['routeno']['value'].to_i }.each_with_index do |r,i|
   = link_to r['routeno']['value'], route_path(r['routeno']['value']), :class => "btn btn-small"
 

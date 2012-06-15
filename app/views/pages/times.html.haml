@@ -10,21 +10,27 @@
     }
     //]]>
 .row
-  .span6
+  .span5
     %h2 Times for Route #{params[:route_id]}
-    .well
-      = params[:service_description]
-      %br/
-      = params[:stop_name]
-      %br/
-      on #{Time.zone.now.strftime("%a %d %B %Y, %H:%M")}
-    .row
-      - @times['results']['bindings'].each_with_index do |t, i|
-        .span2
-          .center
-            <span#{" class='faded'" if Time.zone.parse("#{t['depTime']['value']}", Time.zone.now) < Time.zone.now}>#{t['depTime']['value'][0..4]}
-  .span3
-    #map_canvas.stop
+    %i{:class => "icon-arrow-right"}
+    = params[:service_description]
+    %br/
+    %i{:class => "icon-ok-sign"}
+    = params[:stop_name]
+    %br/
+    %i{:class => "icon-time"}
+    #{Time.zone.now.strftime("%a %d %B %Y, %H:%M")}
+    %hr
+    %table.table.table-bordered
+      %tbody
+        - @times['results']['bindings'].in_groups_of(3) do |group|
+          %tr
+            - group.each do |t|
+              %td{:class => (t.present? and Time.zone.parse("#{t['depTime']['value']}", Time.zone.now) < Time.zone.now) ? "faded" : ""}
+                .center= t['depTime']['value'][0..4].to_s if t.present?
+    %p
+      %em Faded times indicate previous departures
+  #map_canvas.stop.span4
 %p
   - @times.inspect
 %p

@@ -2,10 +2,7 @@ Gmbuses::Application.routes.draw do
   match 'route/:route' => 'pages#route', :as => :route
   match 'route/:route/stops/:service_description' => 'pages#stops', :as => :stops
   match 'route/:route/stops/:service_description/times/:stop_name' => 'pages#times', :as => :times
-  match '/stops' => 'pages#stops'
-  match '/route' => 'pages#route'
   match '/service' => 'pages#service'
-  match '/service/:route_id/times' => 'pages#times', :as => :oldtimes
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -27,39 +27,30 @@
           .span3
             #info.form
               = form_tag('/route', :method => :get, :class => "well form-search") do
-                %h3 Search by Route:
+                %h3 Search by Route Number:
                 %br/
                 = text_field_tag 'route', '', :class => "input-medium search-query"
                 = submit_tag 'Search', :class => "btn"
-            .well.sidebar-nav
-              %h3 Sidebar
-              %ul.nav.nav-list
-                %li.nav-header Sidebar
-                %li= link_to "Link 1", "/path1"
-                %li= link_to "Link 2", "/path2"
-                %li= link_to "Link 3", "/path3"
       %hr
       %footer
         #footer
-          %p
-          %table
-            %tr
-              %td
-                Built by
-                %br/
-                = link_to image_tag("bobop_logo_sm.jpg"), "http://bobop.co.uk"
-              %td
-                Open Data from
-                %br/
-                = link_to image_tag("TfGM_logo_sm.jpg"), "http://www.tfgm.com"
-              %td
-                Linked Data from
-                %br/
-                = link_to image_tag("swirrl.png"), "http://www.swirrl.com"
-              %td
-                Inspired by
-                %br/
-                = image_tag "odm_logo_sm.jpg"
+          .row
+            .span3
+              Built by
+              %br/
+              = link_to image_tag("bobop_logo_sm.jpg"), "http://bobop.co.uk"
+            .span3
+              Open Data from
+              %br/
+              = link_to image_tag("TfGM_logo_sm.jpg"), "http://www.tfgm.com"
+            .span3
+              Linked Data from
+              %br/
+              = link_to image_tag("swirrl.png"), "http://www.swirrl.com"
+            .span3
+              Inspired by
+              %br/
+              = image_tag "odm_logo_sm.jpg"
         :javascript
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', 'UA-157020-31']);
