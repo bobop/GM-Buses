@@ -1,0 +1,7 @@
+%h2 Services for #{params[:route]}
+- @services['results']['bindings'].each do |s|
+  %p= link_to s['description']['value'], stops_path(:cal_uri => URI.escape(s['cal']['value']), :route => params[:route], :service_description => s['description']['value']), :class => "btn"
+
+%p
+  - @services.inspect
+  - raw @query.gsub('/n', '<br>')

@@ -27,6 +27,7 @@ class PagesController < ApplicationController
   end
   
   def route
+    require 'uri'
     @query = "
     PREFIX transit: <http://vocab.org/transit/terms/>
     PREFIX rdf: <http://www.w3.org/2000/01/rdf-schema#>
@@ -76,6 +77,12 @@ class PagesController < ApplicationController
     "
     response = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&q=#{URI.encode(@query)}")
     @stops = JSON.parse(response.body)
+    @stops['results']['bindings'].each do |s|
+      logger.info("--- s = #{s.inspect}")
+      logger.info("--- s['long']['value'] = #{s['long']['value'].inspect}")
+    end
+    logger.info("--- @stops['results']['bindings'] = #{@stops['results']['bindings'].inspect}")
+    
     #render :json => response.body
     respond_to do |format|
       format.html # home.html.erb

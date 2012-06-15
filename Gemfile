@@ -7,6 +7,7 @@ gem 'jquery-rails'
 gem 'hpricot'
 gem 'ruby_parser'
 gem 'haml-rails'
+gem "twitter-bootstrap-rails"
 
 group :assets do
   gem 'sass-rails'

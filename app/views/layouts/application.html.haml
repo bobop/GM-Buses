@@ -1,0 +1,77 @@
+!!! 5
+%html(lang="en")
+  %head
+    %meta(charset="utf-8")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %title= content_for?(:title) ? yield(:title) : "Greater Manchester Bus Times"
+    = csrf_meta_tags
+    / Le HTML5 shim, for IE6-8 support of HTML elements
+    /[if lt IE 9]
+      = javascript_include_tag "http://html5shim.googlecode.com/svn/trunk/html5.js"
+    = stylesheet_link_tag "application", :media => "all"
+    %link(href="images/favicon.ico" rel="shortcut icon")
+    %link(href="images/apple-touch-icon.png" rel="apple-touch-icon")
+    %link(href="images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72")
+    %link(href="images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114")
+    = yield :header
+  %body{ :onload => "initialize()" }
+    .container
+      #header
+        %h1= link_to "Greater Manchester Bus Times", root_path
+        %p.description Making Greater Manchester's Bus Times more Accessible
+        %hr
+      .content
+        .row
+          .span9
+            = yield
+          .span3
+            #info.form
+              = form_tag('/route', :method => :get, :class => "well form-search") do
+                %h3 Search by Route:
+                %br/
+                = text_field_tag 'route', '', :class => "input-medium search-query"
+                = submit_tag 'Search', :class => "btn"
+            .well.sidebar-nav
+              %h3 Sidebar
+              %ul.nav.nav-list
+                %li.nav-header Sidebar
+                %li= link_to "Link 1", "/path1"
+                %li= link_to "Link 2", "/path2"
+                %li= link_to "Link 3", "/path3"
+      %hr
+      %footer
+        #footer
+          %p
+          %table
+            %tr
+              %td
+                Built by
+                %br/
+                = link_to image_tag("bobop_logo_sm.jpg"), "http://bobop.co.uk"
+              %td
+                Open Data from
+                %br/
+                = link_to image_tag("TfGM_logo_sm.jpg"), "http://www.tfgm.com"
+              %td
+                Linked Data from
+                %br/
+                = link_to image_tag("swirrl.png"), "http://www.swirrl.com"
+              %td
+                Inspired by
+                %br/
+                = image_tag "odm_logo_sm.jpg"
+        :javascript
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-157020-31']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+    /
+      Javascripts
+      \==================================================
+    / Placed at the end of the document so the pages load faster
+    = javascript_include_tag "application"
