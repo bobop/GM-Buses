@@ -10,20 +10,20 @@ class PagesController < ApplicationController
 
     order by ?name
     "
-    response = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&_page=1&q=#{URI.encode(query)}")
+    response = RestClient.get("http://api.citysdk.waag.org/admr.uk.gr.manchester/ptlines?per_page=1000")
     @routes = JSON.parse(response.body)
     
-    (2..5).each do |i|
-      response2 = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&_page=#{i}&q=#{URI.encode(query)}")
-      @routes2 = JSON.parse(response2.body)
-      @routes2['results']['bindings'].each do |r|
-        @routes['results']['bindings'].push(r)
-      end
-    end
-    respond_to do |format|
-      format.html # home.html.erb
-      format.mobile # home.mobile.erb
-    end   
+    # (2..5).each do |i|
+    #   response2 = RestClient.get("http://linkedmanchester.org/sparql.json?_per_page=100&_page=#{i}&q=#{URI.encode(query)}")
+    #   @routes2 = JSON.parse(response2.body)
+    #   @routes2['results']['bindings'].each do |r|
+    #     @routes['results']['bindings'].push(r)
+    #   end
+    # end
+    # respond_to do |format|
+    #   format.html # home.html.erb
+    #   format.mobile # home.mobile.erb
+    # end   
   end
   
   def route

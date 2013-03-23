@@ -1,4 +1,5 @@
 %h3 Select your Route:
-- @routes['results']['bindings'].sort_by{ |k| k['routeno']['value'].to_i }.each_with_index do |r,i|
-  = link_to r['routeno']['value'], route_path(r['routeno']['value']), :class => "btn btn-small"
+- @routes['results'].sort_by{ |k| k['name'].split.last.to_i }.each_with_index do |r,i|
+  = link_to r['name'].split.last, route_path(r['cdk_id']), :class => "btn btn-small"
 
+= @routes.inspect
